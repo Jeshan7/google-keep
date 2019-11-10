@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Container, Button } from 'react-bootstrap';
+import fire from '../config/Firebase.js';
 
 class Login extends Component {
   state = {
@@ -9,7 +10,11 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);  
+    
+    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then( cred => {
+        console.log(cred.user.email);
+      })
   }
   
   inputHandler = (e) => {

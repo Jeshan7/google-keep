@@ -1,42 +1,64 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
+import fire from './config/Firebase.js';
 import Navbar from './NavbarComponent/NavbarComponent.js';
-import Notes from './NotesComponent/AddNotesComponent.js';
+import AddNotes from './NotesComponent/AddNotesComponent.js';
 import Login from './LoginComponent/LoginComponent';
 import Register from './RegisterComponent/RegisterComponent.js';
+import AllNotes from './NotesComponent/AllNotes.js';
 
 class App extends Component {
-  // state = {
-  //   showModal: false
-  // }
+  state = {
+    user: {}
+  }
   
-  // showModalHandler = () => {
-  //   this.setState({
-  //     showModal: true
-  //   })
-  // }
+  componentDidMount() {
+    this.authListener();
+  }
 
-  render() {
-    // let person = null;
-    // if(this.state.showModal){
-    //   person = (
-    //     <div>{
-    //       <Login modalState={this.state.showModal}/>
-    //     }
-    //     </div> 
+  authListener = () => {
+    fire.auth().onAuthStateChanged( user => {
+      if(user) {
+        this.setState({ user })
+        console.log(user.email);
+      } else {
+        this.setState({ user: null });
+        console.log("no user");
+      }
+    })  
+  } 
+
+  render() {    
+    
+    // let Tasks = null;
+    // if(this.state.showTasks) {
+    //   Tasks = (
+    //     <div>
+    //       { 
+    //         this.state.notes.map((note, index) => {
+    //           return (
+    //             <AllNotes />
+    //           );
+    //         })
+    //       }
+    //     </div>
     //   )
-      
-    // }    
-
+    // }
     return (
-      <div className="App">
-       <Navbar click={this.showModalHandler}/>
-       {/* <Notes /> */}
-       <Login/>
-       <Register/>
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          <Navbar />
+          <Route path="/register" component={Register}/>
+          <Route path="/login" component={Login}/>
+          {/* <AddNotes /> */}
+          {/* <AllNotes /> */}
+          {/* <Login/> */}
+          {/* <Register/> */}
+          {/* {Tasks} */}
+        </div>
+      </BrowserRouter>
     );
   }
 }
