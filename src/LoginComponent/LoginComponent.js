@@ -14,6 +14,7 @@ class Login extends Component {
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
       .then( cred => {
         console.log(cred.user.email);
+        this.props.history.push("/notes");
       })
   }
   

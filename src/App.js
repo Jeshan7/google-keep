@@ -7,7 +7,8 @@ import Navbar from './NavbarComponent/NavbarComponent.js';
 import AddNotes from './NotesComponent/AddNotesComponent.js';
 import Login from './LoginComponent/LoginComponent';
 import Register from './RegisterComponent/RegisterComponent.js';
-import AllNotes from './NotesComponent/AllNotes.js';
+// import AllNotes from './NotesComponent/AllNotes.js';
+import ShowNotes from './NotesComponent/ShowNotesComponent.js'
 
 class App extends Component {
   state = {
@@ -52,6 +53,8 @@ class App extends Component {
           <Navbar />
           <Route path="/register" component={Register}/>
           <Route path="/login" component={Login}/>
+          <Route path="/notes" component={ShowNotes}/>
+          {/* <ShowNotes/> */}
           {/* <AddNotes /> */}
           {/* <AllNotes /> */}
           {/* <Login/> */}

@@ -17,6 +17,7 @@ class Register extends Component {
     fire.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then( cred => {
         console.log(cred.user.email);
+        this.props.history.push("/notes");
       }); 
   }
   

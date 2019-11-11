@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import { Card, Button, Container,  InputGroup, Form } from 'react-bootstrap';
+import fire from '../config/Firebase.js';
+// import { firestore } from 'firebase';
 
-const addNotes = ({ notes, index}) => {
+const addNotes = () => {
   const [title, setTitle ] = useState('');
   const [content, setContent] = useState('');
-  
+
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("hello");
+   
+
+    fire.firestore().collection('notes').add({
+      title: title,
+      content: content
+    })
+    setTitle('');
+    setContent('');  
   }
+
   return(
     <div>
       <Container>  
@@ -16,10 +26,18 @@ const addNotes = ({ notes, index}) => {
           <Form onSubmit={submitHandler}>
             <Form.Control
               type="text"
-              id="note"
-              placeholder="note"
+              id="title"
+              placeholder="title"
               onChange={e => setTitle(e.target.value)}
             />
+
+            <Form.Control
+              type="text"
+              id="content"
+              placeholder="Content"
+              onChange={e => setContent(e.target.value)}
+            />
+
             <Button variant="outline-primary" type="submit">ADD</Button>
           </Form>
           <Card.Body>
